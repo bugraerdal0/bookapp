@@ -9,7 +9,8 @@ const BookDetails = ({ route }) => {
             <Image source={{ uri: book.thumbnail }} style={styles.image} />
             <Text style={styles.title}>{book.title}</Text>
             <Text style={styles.author}>by {book.authors}</Text>
-            <Text style={styles.description}>{book.description}</Text>
+            <Text style={styles.description} numberOfLines={50} textAlignVertical='top'>
+                {book.description}</Text>
         </ScrollView>
     );
 };

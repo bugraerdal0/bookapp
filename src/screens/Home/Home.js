@@ -7,39 +7,40 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { api_key } from '../../../config';
 import BookList from '../../../components/BookList';
-import { SearchBar } from 'react-native-screens';
+import { SearchBar } from 'react-native-elements';
 
-const url = 'https://www.googleapis.com/books/v1/volumes?q=harry&key=';
+const url = 'https://www.googleapis.com/books/v1/volumes?q=';
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
-
   const [books, setBooks] = useState([]);
+  const [search, setSearch] = useState('love');
 
   useEffect(() => {
-    axios.get(`${url}${api_key}`)
-      .then(response => {
-        const booksData = response.data.items.map(book => {
-          const { id, volumeInfo } = book;
-          const { title, authors, description, imageLinks } = volumeInfo;
-          const thumbnail = imageLinks?.thumbnail;
+    if (search) {
+      axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=${api_key}`)
+        .then(response => {
+          const booksData = response.data.items.map(book => {
+            const { id, volumeInfo } = book;
+            const { title, authors, description, imageLinks } = volumeInfo;
+            const thumbnail = imageLinks?.thumbnail;
 
-          return {
-            id,
-            title,
-            authors,
-            description,
-            thumbnail
-          }
+            return {
+              id,
+              title,
+              authors,
+              description,
+              thumbnail
+            }
+          });
+
+          setBooks(booksData);
+        })
+        .catch(error => {
+          // handle error
+          console.log(error);
         });
-
-        setBooks(booksData);
-      })
-      .catch(error => {
-        // handle error
-        console.log(error);
-      });
-  }, []);
+    }
+  }, [search]);
 
   const handleSignOut = () => {
     signOut(auth).then(() => {
@@ -50,12 +51,28 @@ const HomeScreen = () => {
     });
   };
 
+  const updateSearch = (search) => {
+    setSearch(search);
+  };
+
+  const filteredBooks = books.filter(book => {
+    return book.title.toLowerCase().includes(search.toLowerCase());
+  });
+
   return (
     <SafeAreaView style={styles.root}>
-      <SearchBar style={styles.inputcover}>
-      </SearchBar>
+      <View>
+        <SearchBar
+          placeholder="Search for a book title"
+          onChangeText={updateSearch}
+          value={search}
+          containerStyle={styles.inputcover}
+          inputContainerStyle={styles.searchInput}
+          style={styles.searchBar}
+        />
+      </View>
       <View style={styles.bookListContainer}>
-        <BookList books={books} />
+        <BookList books={filteredBooks} />
       </View>
     </SafeAreaView>
   );
@@ -67,10 +84,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   inputcover: {
-    alignContent: 'center',
-    marginTop: 60,
-    paddingVertical: 24,
-    backgroundColor: '#AA5656'
+    backgroundColor: '#fff',
+    borderBottomColor: 'transparent',
+    borderTopColor: 'transparent',
+    height: 50, // or any other value you prefer
+  },
+
+
+  searchInput: {
+    backgroundColor: '#f2f2f2',
+    borderRadius: 10,
+  },
+  searchBar: {
+    height: 50,
   },
   bookListContainer: {
     flex: 1,
@@ -78,4 +104,3 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
-

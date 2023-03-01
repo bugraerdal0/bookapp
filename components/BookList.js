@@ -10,20 +10,24 @@ const BookList = ({ books }) => {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      {books.map((book) => (
-        <TouchableOpacity key={book.id} onPress={() => handleBookPress(book)}>
-          <View style={styles.bookContainer}>
+    <View>
+      {books.map(book => (
+        <View key={book.id} style={styles.bookContainer}>
+          {book.thumbnail ? (
             <Image source={{ uri: book.thumbnail }} style={styles.thumbnail} />
-            <View style={styles.textContainer}>
-              <Text style={styles.title}>{book.title}</Text>
-              <Text style={styles.author}>{book.authors.join(', ')}</Text>
-              <Text style={styles.description} numberOfLines={2}>{book.description}</Text>
+          ) : (
+            <View style={styles.noThumbnail}>
+              <Text>No thumbnail</Text>
             </View>
+          )}
+          <View style={styles.bookInfo}>
+            <Text style={styles.bookTitle}>{book.title}</Text>
+            {book.authors && <Text style={styles.bookAuthors}>{book.authors.join(', ')}</Text>}
+            <Text style={styles.bookDescription}>{book.description}</Text>
           </View>
-        </TouchableOpacity>
+        </View>
       ))}
-    </ScrollView>
+    </View>
   );
 };
 
