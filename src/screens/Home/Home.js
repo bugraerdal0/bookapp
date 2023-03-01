@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { api_key } from '../../../config';
 import BookList from '../../../components/BookList';
+import { SearchBar } from 'react-native-screens';
 
 const url = 'https://www.googleapis.com/books/v1/volumes?q=harry&key=';
 
@@ -51,8 +52,8 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.root}>
-      <View style={styles.inputcover}>
-      </View>
+      <SearchBar style={styles.inputcover}>
+      </SearchBar>
       <View style={styles.bookListContainer}>
         <BookList books={books} />
       </View>
@@ -68,7 +69,8 @@ const styles = StyleSheet.create({
   inputcover: {
     alignContent: 'center',
     marginTop: 60,
-    paddingVertical: 16,
+    paddingVertical: 24,
+    backgroundColor: '#AA5656'
   },
   bookListContainer: {
     flex: 1,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const BookList = ({ books }) => {
@@ -10,7 +10,7 @@ const BookList = ({ books }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {books.map((book) => (
         <TouchableOpacity key={book.id} onPress={() => handleBookPress(book)}>
           <View style={styles.bookContainer}>
@@ -23,14 +23,14 @@ const BookList = ({ books }) => {
           </View>
         </TouchableOpacity>
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F9F5E7',
     padding: 10,
   },
   bookContainer: {
