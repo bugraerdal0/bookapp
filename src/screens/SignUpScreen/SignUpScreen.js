@@ -70,7 +70,7 @@ const SignUpScreen = () => {
           placeholder="Confirm your password"
           secureTextEntry
         />
-        <CustomButton title="Sign Up" onPress={handleSignup} />
+        <CustomButton title="Sign Up" onPress={handleSignup} style={styles.btn} />
       </ImageBackground>
     </SafeAreaView>
   );
@@ -85,7 +85,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-
+  },
+  btn: {
+    opacity: 0.9,
   }
 });
 

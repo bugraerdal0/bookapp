@@ -1,12 +1,44 @@
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import CustomButton from '../../../components/CustomButton';
 import { signOut } from "firebase/auth";
 import { auth } from '../../../firebase';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import { api_key } from '../../../config';
+import BookList from '../../../components/BookList';
+
+const url = 'https://www.googleapis.com/books/v1/volumes?q=harry&key=';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${url}${api_key}`)
+      .then(response => {
+        const booksData = response.data.items.map(book => {
+          const { id, volumeInfo } = book;
+          const { title, authors, description, imageLinks } = volumeInfo;
+          const thumbnail = imageLinks?.thumbnail;
+
+          return {
+            id,
+            title,
+            authors,
+            description,
+            thumbnail
+          }
+        });
+
+        setBooks(booksData);
+      })
+      .catch(error => {
+        // handle error
+        console.log(error);
+      });
+  }, []);
 
   const handleSignOut = () => {
     signOut(auth).then(() => {
@@ -20,13 +52,13 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.inputcover}>
-        <CustomButton title="Sign Out" onPress={handleSignOut} />
+      </View>
+      <View style={styles.bookListContainer}>
+        <BookList books={books} />
       </View>
     </SafeAreaView>
   );
 };
-
-export default HomeScreen;
 
 const styles = StyleSheet.create({
   root: {
@@ -38,5 +70,10 @@ const styles = StyleSheet.create({
     marginTop: 60,
     paddingVertical: 16,
   },
+  bookListContainer: {
+    flex: 1,
+  },
 });
+
+export default HomeScreen;
 

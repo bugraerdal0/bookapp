@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, ImageBackground } from 'react-nat
 import React from 'react';
 import CustomInput from '../../../components/CustomInput';
 import { Title } from 'react-native-paper';
+import CustomButton from '../../../components/CustomButton';
 const ForgotPasswordScreen = () => {
   return (
     <SafeAreaView style={styles.root}>
@@ -19,6 +20,10 @@ const ForgotPasswordScreen = () => {
               Enter your email address to send a reset link to your email
             </Text>
             <CustomInput placeholder='enter your email' />
+            <View style={styles.btn_cover}>
+              <CustomButton title="Send" style={styles.btn} />
+              {/* onPress={handleSendLink} yapısı eklenecek */}
+            </View>
           </View>
         </View>
       </ImageBackground>
@@ -59,7 +64,15 @@ const styles = StyleSheet.create({
     fontFamily: 'PlayfairDisplay_900Black',
   },
   input: {
-    marginBottom: 170,
+    marginBottom: 100,
+  },
+  btn_cover: {
+    opacity: 0.9,
+    width: "75%",
+    alignSelf: "center",
+  },
+  btn: {
+    // height: "10%",
   }
 }
 )
