@@ -1,11 +1,7 @@
-# Sample Snack app
+The e-Book App "Librare".
+Built with React Native.
+Used Google Firebase, Google Books API and axios.
+Also used Open AI Dall-E2 to create unique background images on Forgot Password screen and Sign Up screen.
+To make a stable and optimizated app, I also used OpenAI's chatgpt to review the code and find possible better solutions.
+I also used Google Fonts' Playfair Display font.
 
-Open the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!
-
-When you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo-cli](https://docs.expo.io/get-started/installation).
-
-All projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.
-
-If you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.io/c/snack).
-
-Snack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).
